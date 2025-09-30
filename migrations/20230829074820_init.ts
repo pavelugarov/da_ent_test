@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   return knex.raw(`
     CREATE TABLE IF NOT EXISTS public.users (
       id BIGSERIAL PRIMARY KEY,
-      login text NOT NULL,
+      login text NOT NULL UNIQUE,
       password TEXT NOT NULL,
       "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
@@ -15,7 +15,8 @@ export async function up(knex: Knex): Promise<void> {
       "sessionId" uuid NOT NULL,
       "refreshToken" text NOT NULL,
       "lastAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()      
+      "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      UNIQUE("userId", "sessionId")    
     );
 
     CREATE TABLE IF NOT EXISTS public.files (
