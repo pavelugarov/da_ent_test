@@ -32,7 +32,6 @@ export class FileController {
     return this.fileService.create({ originalname, mimetype, filename, path, size, extension, userId: request.userSession?.userId })
   }
 
-  @Public()
   @Get('download/:id')
   async downloadFile(@Param('id') id: string) {
     const fileEntity = await this.fileService.findOne(+id);
